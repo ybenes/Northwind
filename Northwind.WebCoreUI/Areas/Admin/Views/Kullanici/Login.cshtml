@@ -1,0 +1,213 @@
+﻿@using Northwind.Model.ViewModel.Areas.Admin
+@model LoginViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Northwind Giriş Ekranı</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/assets/css/adminlte.min.css">
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+    <link href="~/assets/plugins/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
+
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/assets/index2.html"><b>Norhtwind</b>Market</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Lütfen Giriş Yapınız.</p>
+
+                <form id="frmLogin" action="/Admin/Kullanici/Login" method="post">
+
+                    @*Ajax OLMAYAN DURUMDA sadece bu!!*@
+                    @Html.AntiForgeryToken()
+
+
+                    <div class="input-group mb-3">
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="Email"></span>
+                    <div class="input-group mb-3">
+                        <input asp-for="Sifre" type="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+
+                        <div class="row">
+
+                            <img class="col-4" id="imgCaptcha" src="/Admin/Kullanici/GuvenlikKodu" />
+                            <div class="col-6">
+                                <input asp-for="GuvenlikKodu" class="form-control" placeholder="Güvenlik Kodu">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-2">
+
+                                <img src="/assets/img/refresh.png" style="cursor:pointer" onclick="CaptchaRefresh()" height="25" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <span asp-validation-for="Sifre"> </span>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input asp-for="BeniHatirla" type="checkbox" id="remember">
+                                <label for="remember">
+                                    Beni Hatırla
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        @*Ajax kullanacaksak butonun type ını butona çekiyoruz çünkü clickini jquery ile yakalıyoruz. !!!!*@
+                        <div class="col-4">
+                            @*<button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>*@
+                            <button type="button" id="btnGirisYap" class="btn btn-primary btn-block">Giriş Yap</button>
+                        </div>
+                        <!-- /.col -->
+                        @ViewBag.Mesaj
+
+                    </div>
+                </form>
+
+
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">Şifremi Unuttum</a>
+                </p>
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/assets/js/adminlte.min.js"></script>
+
+
+
+    @*  JQUERY VALİDATİON
+    normal serverside validasyonları yapıyoruz
+    client side için iki tanesini atıyoruz.
+    server side için mutlaka if (modelstate) yapısını kurgulamamız lazım.
+    *@
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+
+    <script>
+        $(document).ready(
+            function () {
+
+                $("#btnGirisYap").click(
+                    function () {
+
+                        var model = {
+                            Email: $("#Email").val(),
+                            Sifre: $("#Sifre").val(),
+                            BeniHatirla: $("#BeniHatirla").val(),
+                            GuvenlikKodu: $("#GuvenlikKodu").val()
+                        }
+
+                        //Validate Token yapmak , ajax kullanarak !!!
+                        var form = $('#frmLogin');
+                        var token = $('input[name="__RequestVerificationToken"]', form).val();
+
+                        if ($('#frmLogin').valid()) {
+                            $.ajax({
+                                url: "/Admin/Kullanici/Login",
+                                method: "Post",
+                                dataType: "json",
+                                //vm controllerdaki parametreyle aynı isimde olacak.
+                                data: { __RequestVerificationToken: token, vm: model },
+                                success: function (r) {
+                                    if (r.result) {
+                                        window.location.href = "/Admin/Home/Index";
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            icon: 'Hata',
+                                            title: 'Giriş Başarısız',
+                                            text: r.mesaj
+                                        })
+                                    }
+
+                                },
+                                error: function () {
+
+
+                                }
+
+
+                            });
+
+                        }
+
+
+
+                    }
+                );
+
+
+            }
+        );
+
+        function CaptchaRefresh() {
+
+            var id = Math.random();
+
+            $("#imgCaptcha").attr("src", "/Admin/Kullanici/GuvenlikKodu?id=" + id);
+
+
+
+        }
+
+    </script>
+
+</body>
+</html>

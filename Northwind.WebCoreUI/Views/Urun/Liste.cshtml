@@ -1,0 +1,89 @@
+﻿@using Northwind.Model.Entity;
+@using Northwind.Model.ViewModel.Areas.Admin;
+@{
+    ViewData["Title"] = "Liste";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model UrunListeViewModel
+<div class="col-12">
+    <!-- /.card -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Ürün Listesi</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Ürün No.</th>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Stok Adedi</th>
+                        <th>Birim Fiyatı</th>
+                        <th>Açıklama</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int RowNo = 0;
+                    }
+                    @foreach (Urun item in Model.Urunler)
+                    {
+
+                        <tr>
+                            <td>
+                                @{
+                                    RowNo++;
+                                } @RowNo
+                            </td>
+                            <td>@item.UrunAdi</td>
+
+                            <td> @(item.Kategoriler == null ? "" : item.Kategoriler.KategoriAdi)</td>
+
+                            <td>@item.HedefStokDuzeyi</td>
+                            <td>@item.BirimFiyati $</td>
+                            @*<td>@(item.Aciklama == null ? item.Kategoriler.Aciklama : item.Aciklama)</td>*@
+                            <td>
+                                @if (item.Kategoriler.Aciklama == null && item.Aciklama != null)
+                                {
+                                    @item.Aciklama
+                                }
+                                @if ((item.Kategoriler.Aciklama != null && item.Aciklama == null))
+                                {
+                                    @item.Kategoriler.Aciklama
+                                }
+                                @if ((item.Kategoriler.Aciklama == null && item.Aciklama == null))
+                                {
+                                    @("Açıklama Bulunmamaktadır.")
+                                }
+                                @if ((item.Kategoriler.Aciklama != null && item.Aciklama != null))
+                                {
+                                    @(item.Kategoriler.Aciklama + " " + item.Aciklama)
+                                }
+
+                                </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Ürün No.</th>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Stok Adedi</th>
+                        <th>Birim Fiyatı</th>
+                        <th>Açıklama</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>

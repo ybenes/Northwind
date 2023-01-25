@@ -1,0 +1,20 @@
+﻿@using Northwind.Model.Entity;
+@model List<Kategori>
+<table class="table table-bordered">
+
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+
+               @item.KategoriAdi
+
+            </td>
+
+        </tr>
+    }
+
+
+</table>

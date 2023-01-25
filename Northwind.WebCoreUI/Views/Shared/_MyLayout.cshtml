@@ -1,0 +1,47 @@
+﻿@using Northwind.Model.Entity;
+
+<!DOCTYPE html>
+@model List<Kategori>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    @RenderSection("Styles",false)
+</head>
+<body>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+
+
+                    @*@{await Html.PartialAsync("~/Views/Shared/Partials/KategoriMenu.cshtml", Model);}
+
+                        @{await Html.RenderPartialAsync("~/Views/Shared/Partials/KategoriMenu.cshtml", Model);}*@
+
+
+                    @*@Html.Partial("~/Views/Shared/Partials/KategoriMenu.cshtml", Model)*@
+
+                    @await Component.InvokeAsync("KategoriMenu")
+
+
+                </div>
+                <div class="col-md-8">
+
+
+                    @RenderBody()
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+  
+</body>
+</html>

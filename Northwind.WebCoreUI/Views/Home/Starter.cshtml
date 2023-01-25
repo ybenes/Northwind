@@ -1,0 +1,160 @@
+﻿@using Northwind.Model.ViewModel.Areas.Admin;
+@{
+    Layout = "";
+}
+
+@model SignInViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwind</title>
+
+    <link rel="shortcut icon" href="/images/northwindheader.png">
+    <link href="~/front/starter.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/front/form.css">
+       <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+    
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Section 1 -->
+        <section class="section-1" id="section-1">
+            <!-- Logo -->
+
+            <a href="/Home/Starter" class="resim">
+                <img src="/images/northwindheader.png" alt="logo" width="50" />
+            </a>
+
+            <!--End of Logo -->
+            <!-- Navbar -->
+            <nav class="navbar">
+                <a href="/Admin/Home/Index" class="navbar-link">Giriş Yap</a>
+                <a href="#section-2" class="navbar-link">Kayıt Ol</a>
+                <a href="/Admin/Kullanici/Login" class="navbar-link">Yönetim Paneli</a>
+
+            </nav>
+
+
+            <!-- End of Navbar -->
+            <!-- Cube -->
+
+
+            <div class="col-md-3 cube-wrapper">
+
+                <div class="cube">
+                    <div class="front-side">
+                        <img src="/images/northwindheader.png" />
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- End of Cube -->
+            <!-- Banner -->
+
+            <div class="col-md-7 section-1-banner center">
+
+                <h1>NorthWind</h1>
+                <p>"Northwind E-Ticaret Platformuna Hoşgeldiniz."</p>
+                <span> </span>
+                <button onclick="window.location.href='/Urun/Index'" type="button">Misafir Olarak Devam Et.</button>
+            </div>
+
+            
+        </section>
+        
+
+        <div class="containerbody" id="section-2">
+            <div class="container1">
+                <div class="title">Kayıt Ol</div>
+                <div class="content">
+                    <form action="#">
+                         @Html.AntiForgeryToken()
+                        <div class="user-details">
+                            <div class="input-box">
+                                <label asp-for="Adi">İsim</label>
+                                <input asp-for="Adi" type="text" class="details" placeholder="Lütfen adınızı giriniz." required>
+                            </div>
+                            <div class="input-box">
+                                <label asp-for="Soyadi">Soyadı</label>
+                                <input asp-for="Soyadi" type="text" class="details" placeholder="Lütfen soyadınızı giriniz." required>
+                            </div>
+                            <div class="input-box">
+                                <label asp-for="KullaniciAdi">Kullanıcı Adı</label>
+                                <input asp-for="KullaniciAdi" type="text" class="details" placeholder="Lütfen kullanıcı adınızı giriniz." required>
+                            </div>
+
+                            <div class="input-box">
+                                 <label asp-for="Email">Email</label>
+                                <input asp-for="Email" type="text" class="details" placeholder="Lütfen Email giriniz." required>
+                            </div>
+                            
+                            <div class="input-box">
+                                <label asp-for="Sifre">Şifre</label>
+                                <input asp-for="Sifre" type="text" class="details" placeholder="Lütfen şifrenizi giriniz." required>
+                            </div>
+                            <div class="input-box">
+                                <label asp-for="SifreTekrar">Şifre Tekrar</label>
+                                <input asp-for="SifreTekrar" type="text" class="details" placeholder="Lütfen şifrenizi giriniz." required>
+                            </div>
+                        </div>     
+                        <div class="button">
+                            <input  id="btnKayıtOl" type="button" class="btn btn-primary" value="Kayıt Ol">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+     </div>
+            
+
+
+
+        <!-- End of Section 5 -->
+        <!-- Section 6 -->
+        <section class="section-6 center">
+            <div class="section-6-icons">
+                <a href="#section-1" class="icon-link">
+                    <img src="/images/northwindbottom.png">
+                </a>
+                <a href="#section-2" class="icon-link">
+                    <img src="/images/register.png">
+                </a>
+                <a href="/Admin/Home/Index" class="icon-link">
+                    <img src="/images/loginw.png">
+                </a>
+                <a href="/Urun/Index" class="icon-link">
+                    <img src="/images/guest.png">
+                </a>
+                <a href="/Admin/Kullanici/Login" class="icon-link">
+                    <img src="/images/login.png">
+                </a>
+
+
+            </div>
+            <p class="copyright">Northwind</p>
+        </section>
+        <!-- End of Section 6 -->
+    </div>
+
+    <!-- jQuery -->
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/front/signin.js"></script>
+
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+
+
+</body>
+</html>
+
+

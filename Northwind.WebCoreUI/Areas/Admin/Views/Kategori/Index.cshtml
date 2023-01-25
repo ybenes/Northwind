@@ -1,0 +1,169 @@
+﻿@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model KategoriViewModel
+
+
+<form id="FormKategoriGuncelle" class="form-horizontal">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="GID" value="" />
+    <div class="modal fade" id="KategoriGuncelleModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Kategori Güncelleme Paneli</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="GID" />
+
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Kategori Adı</label>
+                        <div class="col-sm-10">
+                            <input type="text" asp-for="GKategoriAdi" class="form-control" placeholder="KategoriAdı">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">Açıklama</label>
+                        <div class="col-sm-10">
+
+
+                            <textarea asp-for="GAciklama" class="form-control" placeholder="Açıklama"></textarea>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">KAPAT</button>
+                    <button id="btnKategoriGuncelle" type="button" class="btn btn-primary">GÜNCELLE</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+
+<div class="modal fade" id="modalKategoriEkle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategori Ekleme Paneli</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="card card-primary">
+
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Kategori Adı</label>
+                            <input asp-for="KategoriAdi" type="text" class="form-control" placeholder="Kategori Adı">
+                        </div>
+                        <div class="form-group">
+                            <label>Açıklama</label>
+                            <textarea asp-for="Aciklama" cols="6" rows="10" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">KAPAT</button>
+                <button id="btnKategoriEkle" type="button" class="btn btn-primary">KATEGORİ EKLE</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<p align="center" >
+
+
+    
+</p>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Kategoriler</h3>
+                        <div align ="right"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalKategoriEkle">Kategori Ekle</button></div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblKategoriler" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Kategori No</th>
+                                    <th>Kategori Adı</th>
+                                    <th>Açıklama</th>
+                                    
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (Kategori item in Model.KategoriListesi)
+                                {
+                                    <tr>
+                                        <td>@item.KategoriID</td>
+                                        <td>
+                                            @item.KategoriAdi
+                                        </td>
+
+                                        <td>@item.Aciklama</td>
+
+
+                                        <td>
+                                            <a class="btn btn-info btnUrunDuzenle" name="@item.KategoriID">DÜZENLE</a>
+
+                                        </td>
+                                        <td>
+                                            @*<button onclick="KategoriSil(@item.KategoriID);" class="btn btn-warning">SİL</button>*@
+                                            <a class="btn btn-warning btnKategoriSil" name="@item.KategoriID">SİL</a>
+                                        </td>
+
+
+                                    </tr>
+                                }
+
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+@section Scripts
+    {
+    <script src="~/admin/customjs/kategoriIndex.js"></script>
+}
+
